@@ -1,0 +1,104 @@
+
+<!-- run it in live server -->
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>About</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</head>
+
+<body>
+        <p>about to fetch a rainbow</p>
+        <canvas id="chart"></canvas>
+
+    
+
+    <script>
+        const xlabel=[];
+        const ytemp=[];
+        const ytemp1=[];
+
+cahrtit()
+
+ async function cahrtit(){
+    getdata();
+
+const ctx = document.getElementById('chart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels:xlabel ,
+        datasets: [{
+            label: 'graph',
+            data: ytemp,
+            fill:false,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+               
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)'
+                
+            ],
+            borderWidth: 1
+        },{
+            label: 'graph',
+            data: ytemp1,
+            fill:false,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+               
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)'
+                
+            ],
+            borderWidth: 1
+        }
+    ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+}
+    async function getdata(){
+        const response =await fetch('rdu-weather-history.csv');
+        const data=await response.text();
+        const table=data.split('\n').slice(1)
+
+        table.forEach(elt=>{
+        
+            const row=elt.split(';');
+            const year=row[0];
+            xlabel.push(year)
+            const temp=row[1];
+            const temp1=row[2];
+            console.log(temp1);
+            ytemp.push(temp)
+            ytemp1.push(temp1)
+
+
+
+            console.log(year,temp)
+            
+        })
+
+    }
+        
+        
+    </script> 
+
+</body>
+
+</html>
